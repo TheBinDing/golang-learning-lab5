@@ -6,27 +6,46 @@ type People struct {
 	name string
 }
 
+type Animal interface {
+	Type() string
+}
+
+type Dog struct{}
+
+func (d Dog) Type() string {
+	return "dog"
+}
+
+type Cat struct{}
+
+func (c Cat) Type() string {
+	return "cat"
+}
+
+type Bat struct{}
+
+func (b Bat) Type() string {
+	return "bat"
+}
+
 func main() {
 	/* 1 */
-	animal := make(map[string]interface{})
-	animal["dog"] = "dog"
-	animal["cat"] = "cat"
-	animal["bat"] = "bat"
+	dog := Dog{}
+	cat := Cat{}
+	bat := Bat{}
 
-	var nameAnimal []string
-	nameAnimal = append(nameAnimal, "cat", "dog", "bat", "cat")
 	var countDog int
 	var countCat int
 	var countBat int
-	for i := 0; i < len(nameAnimal); i++ {
-		if n, ok := animal[nameAnimal[i]]; ok {
-			if n == "dog" {
-				countDog += 1
-			} else if n == "cat" {
-				countCat += 1
-			} else if n == "bat" {
-				countBat += 1
-			}
+
+	animals := []Animal{dog, cat, bat, cat}
+	for _, animal := range animals {
+		if animal.Type() == "dog" {
+			countDog += 1
+		} else if animal.Type() == "cat" {
+			countCat += 1
+		} else if animal.Type() == "bat" {
+			countBat += 1
 		}
 	}
 	fmt.Printf("Dog: %d\nCat: %d\nBat: %d\n\n", countDog, countCat, countBat)
@@ -45,7 +64,7 @@ func main() {
 	vowels["U"] = "U"
 
 	var ThaiPeople People = People{
-		name: "Apichat",
+		name: "Saritrat Jirakulphondchai",
 	}
 
 	fmt.Println(ThaiPeople.name)
